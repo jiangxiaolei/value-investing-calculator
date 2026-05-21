@@ -52,8 +52,8 @@ export type TranslationKey =
 
 export const dictionaries: Record<Locale, Record<TranslationKey, string>> = {
   "zh-CN": {
-    "app.title": "价值投资者思维工具",
-    "app.subtitle": "未来回报倒推估值器",
+    "app.title": "归估值",
+    "app.subtitle": "价值投资思维工具",
     "app.description":
       "基于预期回报率、利润增长率和未来市盈率，计算公司的合理估值与理想买入价格。帮助价值投资者做出理性的投资决策。",
     "app.disclaimer": "本工具仅供教育参考，不构成投资建议。投资有风险，决策需谨慎。",
@@ -109,8 +109,8 @@ export const dictionaries: Record<Locale, Record<TranslationKey, string>> = {
     "unit.percent": "%",
   },
   en: {
-    "app.title": "Value Investing Calculator",
-    "app.subtitle": "DCF-Based Fair Value Estimator",
+    "app.title": "Guigu",
+    "app.subtitle": "Value Investing Tools",
     "app.description":
       "Calculate intrinsic value, ideal buy price, and expected returns based on your return target, growth assumptions, and future valuation multiples. Make rational investment decisions.",
     "app.disclaimer":

@@ -2,19 +2,19 @@ export function getStructuredData() {
   return {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "Value Investing Calculator",
+    name: "归估值",
     description:
-      "Calculate intrinsic stock value using DCF-based valuation. Set your target return, project growth, and determine the ideal buy price with a margin of safety.",
+      "输入目标回报率、利润增速和未来市盈率，计算公司合理估值与理想买入价格。价值投资者的思维辅助工具。",
     applicationCategory: "FinanceApplication",
     operatingSystem: "Web",
     offers: {
       "@type": "Offer",
       price: "0",
-      priceCurrency: "USD",
+      priceCurrency: "CNY",
     },
     author: {
       "@type": "Organization",
-      name: "Value Investing Calculator",
+      name: "归估值",
     },
     browserRequirements: "Requires JavaScript",
   }

@@ -8,7 +8,7 @@ export const metadata: Metadata = siteMetadata
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="zh-CN" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -16,6 +16,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
+        {/* TODO: Replace with your Plausible analytics domain after setup */}
+        {/* <script defer data-domain="value.chengyi.chat" src="https://plausible.io/js/script.js"></script> */}
         <StructuredData />
       </head>
       <body>

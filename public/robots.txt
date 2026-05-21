@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://value.chengyi.chat/sitemap.xml
+
+# Content signals (Cloudflare AI Bot compliance)
+Content-Signal: search=yes
+Content-Signal: ai-input=yes
+Content-Signal: ai-train=no

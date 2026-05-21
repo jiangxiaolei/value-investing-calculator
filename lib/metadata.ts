@@ -1,35 +1,49 @@
 import type { Metadata } from "next"
 
+const BASE_URL = "https://value.chengyi.chat"
+
 export const siteMetadata: Metadata = {
-  title: "Value Investing Calculator - DCF Fair Value Estimator",
+  metadataBase: new URL(BASE_URL),
+  title: {
+    default: "归估值 — 价值投资思维工具",
+    template: "%s | 归估值",
+  },
   description:
-    "Calculate intrinsic stock value using DCF-based valuation. Set your target return, project growth, and determine the ideal buy price with a margin of safety. Free online tool for value investors.",
+    "输入目标回报率、利润增速和未来市盈率，计算公司合理估值与理想买入价格。价值投资者的思维辅助工具，免费使用。",
   keywords: [
+    "归估值",
+    "价值投资",
+    "DCF估值",
+    "内在价值",
+    "合理估值",
+    "安全边际",
+    "市盈率",
+    "股票估值计算器",
+    "价值投资工具",
+    "A股估值",
+    "港股估值",
+    "估值器",
     "value investing",
     "DCF calculator",
     "intrinsic value",
-    "fair value estimator",
-    "stock valuation",
+    "fair value",
     "margin of safety",
-    "investment calculator",
-    "value investing tool",
   ],
-  authors: [{ name: "Value Investing Calculator" }],
-  creator: "Value Investing Calculator",
-  publisher: "Value Investing Calculator",
+  authors: [{ name: "归估值" }],
+  creator: "归估值",
+  publisher: "归估值",
   openGraph: {
-    title: "Value Investing Calculator - DCF Fair Value Estimator",
-    description:
-      "Calculate intrinsic stock value. Set your return target, project growth, and find the ideal buy price with a margin of safety.",
     type: "website",
-    siteName: "Value Investing Calculator",
-    locale: "en_US",
+    siteName: "归估值",
+    title: "归估值 — 价值投资思维工具",
+    description: "输入目标回报率、利润增速和未来市盈率，计算公司合理估值与理想买入价格。",
+    locale: "zh_CN",
+    alternateLocale: ["en_US"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Value Investing Calculator - DCF Fair Value Estimator",
-    description:
-      "Calculate intrinsic stock value. Set your return target, project growth, and find the ideal buy price.",
+    title: "归估值 — Value Investing Tools",
+    description: "Calculate intrinsic value and ideal buy prices for value investing.",
   },
   robots: {
     index: true,
@@ -41,5 +55,9 @@ export const siteMetadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  icons: {
+    icon: "/logo.svg",
+    shortcut: "/logo.svg",
   },
 }
