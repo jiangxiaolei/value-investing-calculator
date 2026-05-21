@@ -1,19 +1,26 @@
-import type { Metadata } from 'next'
-import './globals.css'
+import type { Metadata } from "next"
+import { siteMetadata } from "@/lib/metadata"
+import { AppProviders } from "@/components/providers/app-providers"
+import { StructuredData } from "./structured-data"
+import "./globals.css"
 
-export const metadata: Metadata = {
-  title: '价值投资者思维工具 - 未来回报倒推估值器',
-  description: '基于预期回报率、利润增长率和未来市盈率，计算公司的合理估值与理想买入价格',
-}
+export const metadata: Metadata = siteMetadata
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+        <StructuredData />
+      </head>
+      <body>
+        <AppProviders>{children}</AppProviders>
+      </body>
     </html>
   )
 }
