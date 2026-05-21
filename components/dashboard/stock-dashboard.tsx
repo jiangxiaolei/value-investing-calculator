@@ -208,32 +208,60 @@ export function StockDashboard() {
       return
     }
 
-    // Use East Money API for A-shares
-    if (regionKey === "A-股") {
-      try {
-        const emCode = code.trim().startsWith("0") || code.trim().startsWith("6")
-          ? code.trim()
-          : code.trim().padStart(6, "0")
-        const url = `https://push2.eastmoney.com/api/qt/stock/get?secid=1.${emCode}&fields=f43,f57,f58,f107,f57,f44,f45,f46,f47,f48,f50,f57,f58,f107,f116,f117,f162,f163&cb=&_=`
-        const res = await fetch(url)
-        const data = await res.json()
-        if (data.data) {
-          const d = data.data
-          setQuote({
-            code: emCode,
-            name: d.f58 || code,
-            price: d.f43 / 100 || 0,
-            change: 0,
-            changePercent: 0,
-            pe: d.f162 ? d.f162 / 100 : null,
-            pb: d.f167 ? d.f167 / 100 : null,
-            marketCap: d.f116 ? d.f116 / 100000000 : 0,
-          })
-          return
-        }
-      } catch (e) {
-        console.error("East Money API error:", e)
+    // Use Yahoo Finance API for all regions
+    try {
+      let yahooSymbol = ""
+      if (regionKey === "A-股") {
+        const raw = code.trim().padStart(6, "0")
+        // 6 = Shanghai, 0/3 = Shenzhen
+        const prefix = raw.startsWith("6") ? "SS" : "SZ"
+        yahooSymbol = `${raw}.${prefix}`
+      } else if (regionKey === "HK股") {
+        yahooSymbol = `${code.trim()}.HK`
+      } else if (regionKey === "US股") {
+        yahooSymbol = code.trim().toUpperCase()
       }
+
+      const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(yahooSymbol)}?interval=1d&range=5y`
+      const res = await fetch(url, {
+        headers: {
+          "User-Agent": "Mozilla/5.0",
+          "Accept": "application/json",
+        },
+      })
+      const json = await res.json()
+      const result = json?.chart?.result?.[0]
+
+      if (!result) {
+        setError("未找到该股票，请检查代码后重试。")
+        setLoading(false)
+        return
+      }
+
+      const meta = result.meta
+      const quote = result.timestamp?.map((t: number, i: number) => ({
+        date: new Date(t * 1000).getFullYear().toString(),
+        pe: 0, // PE not available from Yahoo chart
+      })) || []
+
+      setQuote({
+        code: meta.symbol || yahooSymbol,
+        name: meta.shortName || meta.symbol || code,
+        price: meta.regularMarketPrice || 0,
+        change: meta.regularMarketChange || 0,
+        changePercent: meta.regularMarketChangePercent || 0,
+        pe: null, // Will be shown as no data
+        pb: null,
+        marketCap: meta.marketCap || 0,
+        peHistory: [],
+      })
+      setLoading(false)
+      return
+    } catch (e) {
+      console.error("Yahoo Finance API error:", e)
+      setError("查询失败，请稍后重试。")
+      setLoading(false)
+      return
     }
 
     setError("未找到该股票，请检查代码后重试。")
