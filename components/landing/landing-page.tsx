@@ -1,34 +1,33 @@
 "use client"
 
-import { useState } from "react"
 import { useLocale } from "@/lib/i18n/i18n-context"
-import { ArrowLeft, Shield, Calculator, BarChart3, Target, DollarSign, TrendingUp, Zap } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { GrahamNumberCalculator } from "@/components/calculator/graham-number"
-import { MarginOfSafetyCalculator } from "@/components/calculator/margin-of-safety"
-import { PEPortfolioCalculator } from "@/components/calculator/pe-percentile"
-import { TenXTenYearsCalculator } from "@/components/calculator/tenx-ten-years"
-import { FCFQCalculator } from "@/components/calculator/fcf-quality"
+import { ArrowRight, Shield, Calculator, BarChart3, Target, DollarSign, TrendingUp, Zap, LayoutDashboard, Clock, AlertTriangle } from "lucide-react"
+import Link from "next/link"
 
-type ToolId = "graham-number" | "margin-of-safety" | "pe-percentile" | "tenx-ten-years" | "fcf-quality" | null
-
-type ToolMeta = {
-  id: ToolId
+type Tool = {
+  id: string
   zh: string
   en: string
   descZh: string
   descEn: string
+  href: string
   icon: React.ElementType
+  ready: boolean
+  new?: boolean
+  badge?: string
 }
 
-const tools: ToolMeta[] = [
+const tools: Tool[] = [
   {
     id: "graham-number",
     zh: "格雷厄姆数",
     en: "Graham Number",
     descZh: "本杰明·格雷厄姆的保守估值公式，通过每股收益和每股净资产计算内在价值上限",
     descEn: "Benjamin Graham's conservative formula using EPS and book value per share",
+    href: "/tools/graham-number",
     icon: Calculator,
+    ready: true,
+    new: true,
   },
   {
     id: "margin-of-safety",
@@ -36,7 +35,10 @@ const tools: ToolMeta[] = [
     en: "Margin of Safety",
     descZh: "计算当前价格与内在价值的差距，判断当前价格是否具备安全边际",
     descEn: "Calculate the gap between price and intrinsic value to assess buy-zone safety",
+    href: "/tools/margin-of-safety",
     icon: Shield,
+    ready: true,
+    new: true,
   },
   {
     id: "pe-percentile",
@@ -44,7 +46,10 @@ const tools: ToolMeta[] = [
     en: "PE Percentile",
     descZh: "对比当前市盈率在历史估值中的分位位置，判断估值高低",
     descEn: "See where current P/E sits in the historical distribution",
+    href: "/tools/pe-percentile",
     icon: BarChart3,
+    ready: true,
+    new: true,
   },
   {
     id: "tenx-ten-years",
@@ -52,7 +57,10 @@ const tools: ToolMeta[] = [
     en: "10x in 10 Years",
     descZh: "计算十年十倍需要的年化增速，评估个股增长预期是否匹配",
     descEn: "Calculate required annual growth rate for 10x in 10 years",
+    href: "/tools/tenx-ten-years",
     icon: Target,
+    ready: true,
+    new: true,
   },
   {
     id: "fcf-quality",
@@ -60,37 +68,107 @@ const tools: ToolMeta[] = [
     en: "FCF Quality",
     descZh: "检验净利润是否由真实现金流支撑，识别「纸面富贵」风险",
     descEn: "Check if net profit is backed by real cash flow — spot financial fraud risk",
+    href: "/tools/fcf-quality",
     icon: DollarSign,
+    ready: true,
+    new: true,
+  },
+  {
+    id: "reverse-calculator",
+    zh: "倒推估值",
+    en: "Reverse Valuation",
+    descZh: "输入目标回报、利润增速和未来市盈率，倒推合理估值与买入价格区间",
+    descEn: "Enter target return, growth rate, and future P/E to reverse-engineer fair value",
+    href: "/tools/reverse-calculator",
+    icon: Clock,
+    ready: true,
+  },
+  {
+    id: "dashboard",
+    zh: "个股仪表盘",
+    en: "Stock Dashboard",
+    descZh: "输入股票代码，一览关键指标与历史走势",
+    descEn: "Enter stock code to view key metrics and historical trends",
+    href: "/dashboard",
+    icon: LayoutDashboard,
+    ready: true,
+  },
+  {
+    id: "moat-analyzer",
+    zh: "护城河分析",
+    en: "Moat Analyzer",
+    descZh: "基于年报文本，AI 分析企业护城河来源与可持续性",
+    descEn: "AI analyzes moat sources and sustainability from annual report text",
+    href: "/tools/moat-analyzer",
+    icon: Shield,
+    ready: false,
+    badge: "AI",
+  },
+  {
+    id: "annual-report",
+    zh: "年报摘要",
+    en: "Annual Report Summary",
+    descZh: "输入年报文本，AI 提取关键业务数据与战略要点",
+    descEn: "AI extracts key business data and strategic highlights from annual report",
+    href: "/tools/annual-report",
+    icon: LayoutDashboard,
+    ready: false,
+    badge: "AI",
+  },
+  {
+    id: "risk-factors",
+    zh: "风险因素清单",
+    en: "Risk Factors",
+    descZh: "从年报或公告中提取风险因素，按重要性排序",
+    descEn: "Extract and rank risk factors from annual reports or disclosures",
+    href: "/tools/risk-factors",
+    icon: AlertTriangle,
+    ready: false,
+    badge: "AI",
   },
 ]
 
-function ToolCard({ tool, isZh, onSelect }: { tool: ToolMeta; isZh: boolean; onSelect: () => void }) {
+function ToolCard({ tool, isZh }: { tool: Tool; isZh: boolean }) {
   const Icon = tool.icon
   return (
-    <button
-      onClick={onSelect}
-      className="
-        group relative flex flex-col gap-4 rounded-2xl border p-6 text-left w-full
-        bg-background hover:border-green-300 hover:shadow-lg hover:shadow-green-100/50
-        dark:hover:shadow-green-950/30 dark:hover:border-green-700
-        transition-all duration-200 cursor-pointer
-        focus:outline-none focus:ring-2 focus:ring-green-500/30
-      "
+    <Link
+      href={tool.href}
+      className={`
+        group relative flex flex-col gap-4 rounded-2xl border p-6 text-left
+        transition-all duration-200
+        ${tool.ready
+          ? "bg-background hover:border-green-300 hover:shadow-lg hover:shadow-green-100/50 dark:hover:shadow-green-950/30 dark:hover:border-green-700"
+          : "bg-muted/30 opacity-60 cursor-not-allowed"
+        }
+      `}
+      {...(tool.ready ? {} : { "aria-disabled": true })}
     >
-      {/* Icon */}
+      {/* Icon + badges */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform">
+        <div className={`flex items-center justify-center w-12 h-12 rounded-xl ${tool.ready ? "bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform" : "bg-muted text-muted-foreground"}`}>
           <Icon className="h-6 w-6" />
         </div>
-        <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-          <span className="text-xs text-green-600 dark:text-green-400 font-medium">
-            {isZh ? "立即使用 →" : "Use →"}
-          </span>
+        <div className="flex items-center gap-2">
+          {tool.new && (
+            <span className="text-xs bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 font-medium px-2 py-0.5 rounded-full">
+              {isZh ? "新" : "New"}
+            </span>
+          )}
+          {tool.badge && (
+            <span className="text-xs bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 font-medium px-2 py-0.5 rounded-full">
+              {tool.badge}
+            </span>
+          )}
+          {!tool.ready && (
+            <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded-full">
+              {isZh ? "待配置" : "Setup required"}
+            </span>
+          )}
         </div>
       </div>
 
       {/* Content */}
-      <div className="space-y-2">
+      <div className="space-y-2 flex-1">
         <h3 className="font-semibold text-base text-foreground">
           {isZh ? tool.zh : tool.en}
         </h3>
@@ -98,38 +176,25 @@ function ToolCard({ tool, isZh, onSelect }: { tool: ToolMeta; isZh: boolean; onS
           {isZh ? tool.descZh : tool.descEn}
         </p>
       </div>
-    </button>
+
+      {/* Footer arrow */}
+      {tool.ready && (
+        <div className="flex items-center gap-1 text-xs text-green-600 dark:text-green-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+          <span>{isZh ? "立即使用" : "Use now"}</span>
+          <ArrowRight className="h-3 w-3" />
+        </div>
+      )}
+    </Link>
   )
 }
 
 export function LandingPage() {
   const { locale } = useLocale()
   const isZh = locale === "zh-CN"
-  const [selectedTool, setSelectedTool] = useState<ToolId>(null)
-
-  // Tool renderer
-  const renderTool = () => {
-    switch (selectedTool) {
-      case "graham-number":
-        return <GrahamNumberCalculator />
-      case "margin-of-safety":
-        return <MarginOfSafetyCalculator />
-      case "pe-percentile":
-        return <PEPortfolioCalculator />
-      case "tenx-ten-years":
-        return <TenXTenYearsCalculator />
-      case "fcf-quality":
-        return <FCFQCalculator />
-      default:
-        return null
-    }
-  }
-
-  const selectedMeta = tools.find((t) => t.id === selectedTool)
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero — always visible when no tool selected */}
+      {/* Hero */}
       <section className="bg-gradient-to-b from-green-50/60 to-background dark:from-green-950/20 py-10 px-4 border-b">
         <div className="max-w-5xl mx-auto text-center space-y-4">
           <div className="inline-flex items-center gap-1.5 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-xs font-medium px-3 py-1.5 rounded-full">
@@ -169,57 +234,14 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Main content */}
+      {/* Tool grid */}
       <section className="flex-1 py-10 px-4">
         <div className="max-w-5xl mx-auto">
-          {/* Tool view — shown when a tool is selected */}
-          {selectedTool && selectedMeta ? (
-            <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-300">
-              {/* Back button + tool title */}
-              <div className="flex items-center gap-4">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setSelectedTool(null)}
-                  className="gap-2 text-muted-foreground hover:text-foreground"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                  {isZh ? "返回工具箱" : "Back to Tools"}
-                </Button>
-                <div className="flex-1 h-px bg-border" />
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400">
-                  {(() => {
-                    const Icon = selectedMeta.icon
-                    return <Icon className="h-5 w-5" />
-                  })()}
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold">{isZh ? selectedMeta.zh : selectedMeta.en}</h2>
-                  <p className="text-sm text-muted-foreground">{isZh ? selectedMeta.descZh : selectedMeta.descEn}</p>
-                </div>
-              </div>
-
-              {/* Tool component */}
-              <div className="pt-2">
-                {renderTool()}
-              </div>
-            </div>
-          ) : (
-            /* Tool grid — shown when no tool selected */
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {tools.map((tool) => (
-                <ToolCard
-                  key={tool.id}
-                  tool={tool}
-                  isZh={isZh}
-                  onSelect={() => setSelectedTool(tool.id)}
-                />
-              ))}
-            </div>
-          )}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {tools.map((tool) => (
+              <ToolCard key={tool.id} tool={tool} isZh={isZh} />
+            ))}
+          </div>
         </div>
       </section>
     </div>
