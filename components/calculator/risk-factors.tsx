@@ -155,14 +155,15 @@ export function RiskFactorsExtractor() {
     setResult(null)
 
     try {
-      const response = await fetch("/api/risk-factors", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_AI_API_URL}/api/ai`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
+          type: "risk-factors",
+          text: companyText.trim(),
           companyName: companyName.trim(),
-          companyText: companyText.trim(),
           locale
         })
       })
@@ -173,8 +174,8 @@ export function RiskFactorsExtractor() {
         const errorData = data as ApiError
         if (errorData.isConfigurationError) {
           setError(isZh
-            ? "API未配置。请设置 OPENAI_API_KEY 或 LLM_API_KEY 环境变量。"
-            : "API not configured. Please set OPENAI_API_KEY or LLM_API_KEY environment variable."
+            ? "API未配置。请在 Cloudflare Worker 设置中配置 OPENAI_API_KEY，并在 Pages 项目中设置 NEXT_PUBLIC_AI_API_URL。"
+            : "API not configured. Set OPENAI_API_KEY in Cloudflare Worker settings, and NEXT_PUBLIC_AI_API_URL in Pages environment variables."
           )
         } else {
           setError(errorData.error || (isZh ? "分析失败" : "Analysis failed"))

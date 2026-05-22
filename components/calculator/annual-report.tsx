@@ -124,13 +124,14 @@ export function AnnualReportSummarizer() {
     setResult(null)
 
     try {
-      const response = await fetch("/api/annual-report", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_AI_API_URL}/api/ai`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          reportText: reportText.trim(),
+          type: "annual-report",
+          text: reportText.trim(),
           companyName: companyName.trim(),
           reportYear: yearNum,
           locale
@@ -143,8 +144,8 @@ export function AnnualReportSummarizer() {
         const errorData = data as ApiError
         if (errorData.isConfigurationError) {
           setError(isZh
-            ? "API未配置。请设置 OPENAI_API_KEY 或 LLM_API_KEY 环境变量。"
-            : "API not configured. Please set OPENAI_API_KEY or LLM_API_KEY environment variable."
+            ? "API未配置。请在 Cloudflare Worker 设置中配置 OPENAI_API_KEY，并在 Pages 项目中设置 NEXT_PUBLIC_AI_API_URL。"
+            : "API not configured. Set OPENAI_API_KEY in Cloudflare Worker settings, and NEXT_PUBLIC_AI_API_URL in Pages environment variables."
           )
         } else {
           setError(errorData.error || (isZh ? "摘要生成失败" : "Summary generation failed"))
