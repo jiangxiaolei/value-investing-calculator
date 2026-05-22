@@ -307,9 +307,10 @@ export function MarginOfSafetyCalculator({
           {verdict && (
             <div className={`p-4 rounded-lg border ${getVerdictInfo().bgColor}`}>
               <div className="flex items-center gap-3">
-                {getVerdictInfo().icon && (
-                  <getVerdictInfo().icon className={`h-6 w-6 ${getVerdictInfo().color}`} />
-                )}
+                {getVerdictInfo().icon && (() => {
+                  const Icon = getVerdictInfo().icon
+                  return <Icon className={`h-6 w-6 ${getVerdictInfo().color}`} />
+                })()}
                 <div className={`text-lg font-semibold ${getVerdictInfo().color}`}>
                   {getVerdictInfo().label}
                 </div>

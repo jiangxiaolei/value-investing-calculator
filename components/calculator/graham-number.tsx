@@ -90,7 +90,7 @@ export function GrahamNumberCalculator({
         </p>
         <p className="text-sm text-muted-foreground max-w-xl mx-auto">
           {isZh 
-            ? "由"本杰明·格雷厄姆"提出的保守估值方法，通过每股收益和每股净资产计算股票的内在价值。"
+            ? '由"本杰明·格雷厄姆"提出的保守估值方法，通过每股收益和每股净资产计算股票的内在价值。'
             : "A conservative valuation method proposed by Benjamin Graham, calculating intrinsic value using EPS and book value per share."
           }
         </p>
