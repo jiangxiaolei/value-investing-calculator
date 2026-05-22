@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useLocale } from "@/lib/i18n/i18n-context"
-import { ArrowLeft, Shield, Calculator, BarChart3, Target, DollarSign, TrendingUp, Zap, LayoutDashboard } from "lucide-react"
+import { ArrowLeft, Shield, Calculator, BarChart3, Target, DollarSign, TrendingUp, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { GrahamNumberCalculator } from "@/components/calculator/graham-number"
 import { MarginOfSafetyCalculator } from "@/components/calculator/margin-of-safety"
@@ -209,47 +209,15 @@ export function LandingPage() {
             </div>
           ) : (
             /* Tool grid — shown when no tool selected */
-            <div className="space-y-8">
-              {/* Valuation tools */}
-              <div>
-                <div className="flex items-center gap-3 mb-5">
-                  <h2 className="text-lg font-semibold tracking-tight">
-                    {isZh ? "估值工具" : "Valuation Tools"}
-                  </h2>
-                  <div className="flex-1 h-px bg-border" />
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {tools.map((tool) => (
-                    <ToolCard
-                      key={tool.id}
-                      tool={tool}
-                      isZh={isZh}
-                      onSelect={() => setSelectedTool(tool.id)}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* Research tools — placeholder for future */}
-              <div>
-                <div className="flex items-center gap-3 mb-5">
-                  <h2 className="text-lg font-semibold tracking-tight text-muted-foreground">
-                    {isZh ? "研究工具（即将上线）" : "Research Tools (Coming Soon)"}
-                  </h2>
-                  <div className="flex-1 h-px bg-border/50" />
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 opacity-50">
-                  <div className="flex flex-col gap-3 rounded-2xl border p-6 text-left cursor-not-allowed">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-muted text-muted-foreground">
-                      <LayoutDashboard className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-base">{isZh ? "个股仪表盘" : "Stock Dashboard"}</h3>
-                      <p className="text-sm text-muted-foreground">{isZh ? "股票代码一键查询关键指标" : "Key metrics for any stock code"}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {tools.map((tool) => (
+                <ToolCard
+                  key={tool.id}
+                  tool={tool}
+                  isZh={isZh}
+                  onSelect={() => setSelectedTool(tool.id)}
+                />
+              ))}
             </div>
           )}
         </div>
