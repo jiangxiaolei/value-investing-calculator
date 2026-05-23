@@ -99,6 +99,84 @@ const MOCK_QUOTE_茅台: StockQuote = {
   ],
 }
 
+const MOCK_QUOTE_阿里: StockQuote = {
+  code: "9988",
+  name: "阿里巴巴",
+  price: 88.5,
+  change: 1.2,
+  changePercent: 1.38,
+  pe: 14.2,
+  pb: 1.6,
+  marketCap: 17200,
+  roe: 12.8,
+  grossMargin: 38.5,
+  debtRatio: 28.3,
+  dividendYield: 1.2,
+  totalRevenue: 9412,
+  netProfit: 823,
+  fcf: 715,
+  eps: 6.2,
+  peHistory: [
+    { date: "2021", pe: 25.3 },
+    { date: "2022", pe: 11.2 },
+    { date: "2023", pe: 15.8 },
+    { date: "2024", pe: 13.5 },
+    { date: "2025", pe: 14.2 },
+  ],
+}
+
+const MOCK_QUOTE_工商: StockQuote = {
+  code: "601398",
+  name: "工商银行",
+  price: 5.82,
+  change: 0.08,
+  changePercent: 1.40,
+  pe: 5.6,
+  pb: 0.58,
+  marketCap: 20740,
+  roe: 10.5,
+  grossMargin: null,
+  debtRatio: 91.2,
+  dividendYield: 6.2,
+  totalRevenue: 8060,
+  netProfit: 3640,
+  fcf: null,
+  eps: 1.04,
+  peHistory: [
+    { date: "2021", pe: 5.8 },
+    { date: "2022", pe: 4.5 },
+    { date: "2023", pe: 5.2 },
+    { date: "2024", pe: 5.9 },
+    { date: "2025", pe: 5.6 },
+  ],
+}
+
+const MOCK_QUOTE_比亚迪: StockQuote = {
+  code: "002594",
+  name: "比亚迪",
+  price: 268.0,
+  change: 7.5,
+  changePercent: 2.88,
+  pe: 22.3,
+  pb: 4.8,
+  marketCap: 7800,
+  roe: 18.6,
+  grossMargin: 20.3,
+  debtRatio: 62.8,
+  dividendYield: 0.5,
+  totalRevenue: 6023,
+  netProfit: 310,
+  fcf: 185,
+  eps: 11.2,
+  peHistory: [
+    { date: "2021", pe: 120.5 },
+    { date: "2022", pe: 58.3 },
+    { date: "2023", pe: 32.1 },
+    { date: "2024", pe: 25.8 },
+    { date: "2025", pe: 22.3 },
+  ],
+}
+
 const KNOWN_STOCKS: Record<string, StockQuote> = {
   "00700": MOCK_QUOTE_腾讯,
   "腾讯": MOCK_QUOTE_腾讯,
@@ -106,6 +184,14 @@ const KNOWN_STOCKS: Record<string, StockQuote> = {
   "茅台": MOCK_QUOTE_茅台,
   "腾讯控股": MOCK_QUOTE_腾讯,
   "贵州茅台": MOCK_QUOTE_茅台,
+  "9988": MOCK_QUOTE_阿里,
+  "阿里巴巴": MOCK_QUOTE_阿里,
+  "阿里": MOCK_QUOTE_阿里,
+  "601398": MOCK_QUOTE_工商,
+  "工商银行": MOCK_QUOTE_工商,
+  "工商": MOCK_QUOTE_工商,
+  "002594": MOCK_QUOTE_比亚迪,
+  "比亚迪": MOCK_QUOTE_比亚迪,
 }
 
 function MetricCard({
@@ -208,12 +294,46 @@ export function StockDashboard() {
       return
     }
 
-    // Use Yahoo Finance API for all regions
+    // Try Worker proxy first (for richer A/H-share data)
+    const workerUrl = (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_AI_API_URL) 
+      ? process.env.NEXT_PUBLIC_AI_API_URL 
+      : (typeof window !== 'undefined' 
+        ? window.location.origin 
+        : 'https://value.chengyi.chat')
+    
+    const regionMap: Record<string, string> = {
+      "A-股": "",
+      "HK股": "hk",
+      "US股": "us",
+    }
+    
+    try {
+      const exchange = regionMap[regionKey] || ""
+      const res = await fetch(`${workerUrl}/?code=${encodeURIComponent(code.trim())}&exchange=${exchange}`, {
+        headers: { "Accept": "application/json" },
+        signal: AbortSignal.timeout(5000),
+      })
+      if (res.ok) {
+        const json = await res.json()
+        if (json?.data) {
+          setQuote({
+            ...json.data,
+            changePercent: json.data.changePercent || 0,
+          })
+          setLoading(false)
+          return
+        }
+      }
+    } catch {
+      // Worker proxy failed, fall through to Yahoo
+      console.log("Worker proxy unavailable, falling back to Yahoo Finance")
+    }
+
+    // Fallback: Yahoo Finance API
     try {
       let yahooSymbol = ""
       if (regionKey === "A-股") {
         const raw = code.trim().padStart(6, "0")
-        // 6 = Shanghai, 0/3 = Shenzhen
         const prefix = raw.startsWith("6") ? "SS" : "SZ"
         yahooSymbol = `${raw}.${prefix}`
       } else if (regionKey === "HK股") {
@@ -224,10 +344,8 @@ export function StockDashboard() {
 
       const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(yahooSymbol)}?interval=1d&range=5y`
       const res = await fetch(url, {
-        headers: {
-          "User-Agent": "Mozilla/5.0",
-          "Accept": "application/json",
-        },
+        headers: { "User-Agent": "Mozilla/5.0", "Accept": "application/json" },
+        signal: AbortSignal.timeout(8000),
       })
       const json = await res.json()
       const result = json?.chart?.result?.[0]
@@ -239,18 +357,13 @@ export function StockDashboard() {
       }
 
       const meta = result.meta
-      const quote = result.timestamp?.map((t: number, i: number) => ({
-        date: new Date(t * 1000).getFullYear().toString(),
-        pe: 0, // PE not available from Yahoo chart
-      })) || []
-
       setQuote({
         code: meta.symbol || yahooSymbol,
         name: meta.shortName || meta.symbol || code,
         price: meta.regularMarketPrice || 0,
         change: meta.regularMarketChange || 0,
         changePercent: meta.regularMarketChangePercent || 0,
-        pe: null, // Will be shown as no data
+        pe: null,
         pb: null,
         marketCap: meta.marketCap || 0,
         peHistory: [],
@@ -263,8 +376,6 @@ export function StockDashboard() {
       setLoading(false)
       return
     }
-
-    setError("未找到该股票，请检查代码后重试。")
   }, [])
 
   const handleSearch = (e: React.FormEvent) => {

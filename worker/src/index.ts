@@ -230,35 +230,67 @@ Return ONLY valid JSON:
 }`
 }
 
-async function callOpenAI(prompt: string, apiKey: string): Promise<string> {
-  const apiUrl = "https://api.openai.com/v1/chat/completions"
+async function callLLM(prompt: string, deepseekKey: string | undefined, openaiKey: string | undefined): Promise<string> {
+  // DeepSeek is the primary LLM (cheaper, China-friendly)
   
-  const response = await fetch(apiUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`
-    },
-    body: JSON.stringify({
-      model: "gpt-4o-mini",
-      messages: [
-        { role: "system", content: "You are a professional investment analyst. Always respond with valid JSON only." },
-        { role: "user", content: prompt }
-      ],
-      temperature: 0.7,
+  if (deepseekKey) {
+    const apiUrl = "https://api.deepseek.com/v1/chat/completions"
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${deepseekKey}`
+      },
+      body: JSON.stringify({
+        model: "deepseek-chat",
+        messages: [
+          { role: "system", content: "You are a professional investment analyst. Always respond with valid JSON only." },
+          { role: "user", content: prompt }
+        ],
+        temperature: 0.7,
+        max_tokens: 4096,
+      })
     })
-  })
-
-  if (!response.ok) {
-    const errorText = await response.text()
-    throw new Error(`OpenAI API error: ${response.status} - ${errorText}`)
+    if (!response.ok) {
+      const errorText = await response.text()
+      throw new Error(`DeepSeek API error: ${response.status} - ${errorText}`)
+    }
+    const data = await response.json()
+    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+      throw new Error("Invalid DeepSeek response format")
+    }
+    return data.choices[0].message.content
   }
-
-  const data = await response.json()
-  if (!data.choices || !data.choices[0] || !data.choices[0].message) {
-    throw new Error("Invalid OpenAI response format")
+  
+  if (openaiKey) {
+    const apiUrl = "https://api.openai.com/v1/chat/completions"
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${openaiKey}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: "You are a professional investment analyst. Always respond with valid JSON only." },
+          { role: "user", content: prompt }
+        ],
+        temperature: 0.7,
+      })
+    })
+    if (!response.ok) {
+      const errorText = await response.text()
+      throw new Error(`OpenAI API error: ${response.status} - ${errorText}`)
+    }
+    const data = await response.json()
+    if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+      throw new Error("Invalid OpenAI response format")
+    }
+    return data.choices[0].message.content
   }
-  return data.choices[0].message.content
+  
+  throw new Error("No API key configured. Set DEEPSEEK_API_KEY or OPENAI_API_KEY in Worker settings.")
 }
 
 function parseJSONResponse(content: string): any {
@@ -276,11 +308,9 @@ function parseJSONResponse(content: string): any {
 }
 
 async function handleAI(request: Request): Promise<Response> {
-  const apiKey = env.OPENAI_API_KEY || env.LLM_API_KEY
-  
-  if (!apiKey) {
+  if (!env.DEEPSEEK_API_KEY && !env.OPENAI_API_KEY) {
     return addCorsHeaders(new Response(
-      JSON.stringify({ error: "API key not configured. Please set OPENAI_API_KEY in Cloudflare Worker settings.", isConfigurationError: true }),
+      JSON.stringify({ error: "API key not configured. Please set DEEPSEEK_API_KEY or OPENAI_API_KEY in Cloudflare Worker settings.", isConfigurationError: true }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     ))
   }
@@ -325,7 +355,7 @@ async function handleAI(request: Request): Promise<Response> {
   }
 
   try {
-    const result = await callOpenAI(prompt, apiKey)
+    const result = await callLLM(prompt, env.DEEPSEEK_API_KEY, env.OPENAI_API_KEY)
     const parsed = parseJSONResponse(result)
     return addCorsHeaders(new Response(
       JSON.stringify(parsed),
