@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
+[id^="cat-"] {
+  scroll-margin-top: 4rem;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }

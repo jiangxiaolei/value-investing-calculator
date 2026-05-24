@@ -298,7 +298,7 @@ export function LandingPage() {
           {toolGroups.map((group) => {
             const CatIcon = group.icon
             return (
-              <div key={group.key}>
+              <div key={group.key} id={`cat-${group.key}`}>
                 {/* Category heading */}
                 <div className="flex items-center gap-2 mb-5">
                   <div className={`flex items-center justify-center w-8 h-8 rounded-lg ${
