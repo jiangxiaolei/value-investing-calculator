@@ -123,7 +123,7 @@ const tools: Tool[] = [
     descEn: "AI analyzes moat sources and sustainability from annual report text",
     href: "/tools/moat-analyzer",
     icon: Shield,
-    ready: false,
+    ready: true,
     badge: "AI",
   },
   {
@@ -134,7 +134,7 @@ const tools: Tool[] = [
     descEn: "AI extracts key business data and strategic highlights from annual report",
     href: "/tools/annual-report",
     icon: LayoutDashboard,
-    ready: false,
+    ready: true,
     badge: "AI",
   },
   {
@@ -145,7 +145,7 @@ const tools: Tool[] = [
     descEn: "Extract and rank risk factors from annual reports or disclosures",
     href: "/tools/risk-factors",
     icon: AlertTriangle,
-    ready: false,
+    ready: true,
     badge: "AI",
   },
 ]
