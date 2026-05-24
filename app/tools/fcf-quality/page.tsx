@@ -4,7 +4,7 @@ import { ToolPageLayout } from "@/components/layout/tool-page-layout"
 import { FCFQCalculator } from "@/components/calculator/fcf-quality"
 
 export const metadata = {
-  title: "自由现金流质量检测 — 盈利真实性分析 | 归估值",
+  title: "自由现金流质量检测 — 盈利真实性分析",
   description: "Check if net profit is backed by real cash flow. Free FCF Quality tool for detecting earnings quality issues.",
 }
 

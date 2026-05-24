@@ -4,7 +4,7 @@ import { ToolPageLayout } from "@/components/layout/tool-page-layout"
 import { MoatAnalyzer } from "@/components/calculator/moat-analyzer"
 
 export const metadata = {
-  title: "护城河分析 — AI评估企业竞争优势 | 归估值",
+  title: "护城河分析 — AI评估企业竞争优势",
   description: "AI-powered economic moat analysis. Free Moat Analyzer that identifies competitive advantages and assesses moat strength.",
 }
 

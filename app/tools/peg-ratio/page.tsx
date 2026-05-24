@@ -4,7 +4,7 @@ import { ToolPageLayout } from "@/components/layout/tool-page-layout"
 import { PEGRatioCalculator } from "@/components/calculator/peg-ratio"
 
 export const metadata = {
-  title: "PEG比率计算器 — P/E与增长比值 | 归估值",
+  title: "PEG比率计算器 — P/E与增长比值",
   description: "Calculate PEG Ratio — Price-to-Earnings divided by growth rate. Free PEG ratio calculator for growth investors.",
 }
 

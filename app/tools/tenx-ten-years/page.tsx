@@ -4,7 +4,7 @@ import { ToolPageLayout } from "@/components/layout/tool-page-layout"
 import { TenXTenYearsCalculator } from "@/components/calculator/tenx-ten-years"
 
 export const metadata = {
-  title: "十年十倍计算器 — 长期回报增速 | 归估值",
+  title: "十年十倍计算器 — 长期回报增速",
   description: "Calculate required annual growth rate for 10x return in 10 years. Free value investing calculator.",
 }
 

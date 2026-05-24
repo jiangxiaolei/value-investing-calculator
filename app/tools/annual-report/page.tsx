@@ -4,7 +4,7 @@ import { ToolPageLayout } from "@/components/layout/tool-page-layout"
 import { AnnualReportSummarizer } from "@/components/calculator/annual-report"
 
 export const metadata = {
-  title: "年报摘要 — AI自动提取关键经营数据 | 归估值",
+  title: "年报摘要 — AI自动提取关键经营数据",
   description: "AI extracts key financial highlights, strategic direction, and risks from annual reports. Free Annual Report Summarizer.",
 }
 

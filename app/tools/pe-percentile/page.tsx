@@ -4,7 +4,7 @@ import { ToolPageLayout } from "@/components/layout/tool-page-layout"
 import { PEPortfolioCalculator } from "@/components/calculator/pe-percentile"
 
 export const metadata = {
-  title: "PE分位对比 — 历史估值分位分析 | 归估值",
+  title: "PE分位对比 — 历史估值分位分析",
   description: "See where current P/E ratio sits in the historical distribution. Free PE Percentile tool for stock analysis.",
 }
 

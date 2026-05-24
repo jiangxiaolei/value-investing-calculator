@@ -4,7 +4,7 @@ import { ToolPageLayout } from "@/components/layout/tool-page-layout"
 import { MarginOfSafetyCalculator } from "@/components/calculator/margin-of-safety"
 
 export const metadata = {
-  title: "安全边际计算器 — 买入区间分析 | 归估值",
+  title: "安全边际计算器 — 买入区间分析",
   description: "Calculate the gap between current price and intrinsic value. Free Margin of Safety calculator for value investors.",
 }
 

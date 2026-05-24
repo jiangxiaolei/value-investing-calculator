@@ -4,7 +4,7 @@ import { ToolPageLayout } from "@/components/layout/tool-page-layout"
 import { SZRCalculator } from "@/components/calculator/szr-calculator"
 
 export const metadata = {
-  title: "Siegel增长率计算器 — 合理市值增速 | 归估值",
+  title: "Siegel增长率计算器 — 合理市值增速",
   description: "Calculate sustainable growth rate using Jeremy Siegel's formula. Free SZR calculator for long-term return estimation.",
 }
 

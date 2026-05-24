@@ -4,7 +4,7 @@ import { ToolPageLayout } from "@/components/layout/tool-page-layout"
 import ValueInvestingCalculator from "@/value-investing-calculator"
 
 export const metadata = {
-  title: "倒推估值计算器 — 合理买入价分析 | 归估值",
+  title: "倒推估值计算器 — 合理买入价分析",
   description: "输入目标回报、利润增速和未来市盈率，倒推合理估值与买入价格区间。免费在线倒推估值工具，科学制定买入计划。",
 }
 

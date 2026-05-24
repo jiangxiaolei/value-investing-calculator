@@ -4,7 +4,7 @@ import { ToolPageLayout } from "@/components/layout/tool-page-layout"
 import { GrahamNumberCalculator } from "@/components/calculator/graham-number"
 
 export const metadata = {
-  title: "格雷厄姆数计算器 — 股票内在价值估值 | 归估值",
+  title: "格雷厄姆数计算器 — 股票内在价值估值",
   description: "Benjamin Graham's conservative formula using EPS and book value per share. Free online Graham Number calculator for value investors.",
 }
 

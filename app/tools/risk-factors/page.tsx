@@ -4,7 +4,7 @@ import { ToolPageLayout } from "@/components/layout/tool-page-layout"
 import { RiskFactorsExtractor } from "@/components/calculator/risk-factors"
 
 export const metadata = {
-  title: "风险因素分析 — AI识别投资风险清单 | 归估值",
+  title: "风险因素分析 — AI识别投资风险清单",
   description: "Extract and rank risk factors from annual reports. Free AI Risk Factor analyzer for value investors.",
 }
 
