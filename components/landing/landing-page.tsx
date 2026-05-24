@@ -1,8 +1,9 @@
 "use client"
 
 import { useLocale } from "@/lib/i18n/i18n-context"
-import { ArrowRight, Shield, Calculator, BarChart3, Target, DollarSign, TrendingUp, Zap, LayoutDashboard, Clock, AlertTriangle } from "lucide-react"
+import { ArrowRight, Shield, Calculator, BarChart3, Target, DollarSign, TrendingUp, Zap, LayoutDashboard, Clock, AlertTriangle, Sparkles, ChevronRight } from "lucide-react"
 import Link from "next/link"
+import { categoryLabel, type ToolCategory } from "@/lib/tools-metadata"
 
 type Tool = {
   id: string
@@ -15,9 +16,17 @@ type Tool = {
   ready: boolean
   new?: boolean
   badge?: string
+  category: ToolCategory
 }
 
+const categories: { key: ToolCategory; icon: React.ElementType }[] = [
+  { key: "quant", icon: Calculator },
+  { key: "ai", icon: Sparkles },
+  { key: "dashboard", icon: LayoutDashboard },
+]
+
 const tools: Tool[] = [
+  // ── Quantitative Tools ──
   {
     id: "graham-number",
     zh: "格雷厄姆数",
@@ -28,6 +37,7 @@ const tools: Tool[] = [
     icon: Calculator,
     ready: true,
     new: true,
+    category: "quant",
   },
   {
     id: "margin-of-safety",
@@ -39,6 +49,7 @@ const tools: Tool[] = [
     icon: Shield,
     ready: true,
     new: true,
+    category: "quant",
   },
   {
     id: "pe-percentile",
@@ -50,6 +61,7 @@ const tools: Tool[] = [
     icon: BarChart3,
     ready: true,
     new: true,
+    category: "quant",
   },
   {
     id: "tenx-ten-years",
@@ -61,6 +73,7 @@ const tools: Tool[] = [
     icon: Target,
     ready: true,
     new: true,
+    category: "quant",
   },
   {
     id: "fcf-quality",
@@ -72,6 +85,7 @@ const tools: Tool[] = [
     icon: DollarSign,
     ready: true,
     new: true,
+    category: "quant",
   },
   {
     id: "reverse-calculator",
@@ -82,6 +96,7 @@ const tools: Tool[] = [
     href: "/tools/reverse-calculator",
     icon: Clock,
     ready: true,
+    category: "quant",
   },
   {
     id: "peg-ratio",
@@ -93,6 +108,7 @@ const tools: Tool[] = [
     icon: TrendingUp,
     ready: true,
     new: true,
+    category: "quant",
   },
   {
     id: "szr-calculator",
@@ -104,17 +120,9 @@ const tools: Tool[] = [
     icon: Target,
     ready: true,
     new: true,
+    category: "quant",
   },
-  {
-    id: "dashboard",
-    zh: "个股仪表盘",
-    en: "Stock Dashboard",
-    descZh: "输入股票代码，一览关键指标与历史走势",
-    descEn: "Enter stock code to view key metrics and historical trends",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-    ready: true,
-  },
+  // ── AI Analysis Tools ──
   {
     id: "moat-analyzer",
     zh: "护城河分析",
@@ -125,6 +133,7 @@ const tools: Tool[] = [
     icon: Shield,
     ready: true,
     badge: "AI",
+    category: "ai",
   },
   {
     id: "annual-report",
@@ -136,6 +145,7 @@ const tools: Tool[] = [
     icon: LayoutDashboard,
     ready: true,
     badge: "AI",
+    category: "ai",
   },
   {
     id: "risk-factors",
@@ -147,8 +157,27 @@ const tools: Tool[] = [
     icon: AlertTriangle,
     ready: true,
     badge: "AI",
+    category: "ai",
+  },
+  // ── Dashboard ──
+  {
+    id: "dashboard",
+    zh: "个股仪表盘",
+    en: "Stock Dashboard",
+    descZh: "输入股票代码，一览关键指标与历史走势",
+    descEn: "Enter stock code to view key metrics and historical trends",
+    href: "/dashboard",
+    icon: LayoutDashboard,
+    ready: true,
+    category: "dashboard",
   },
 ]
+
+const categoryIcons: Record<ToolCategory, React.ElementType> = {
+  quant: Calculator,
+  ai: Sparkles,
+  dashboard: LayoutDashboard,
+}
 
 function ToolCard({ tool, isZh }: { tool: Tool; isZh: boolean }) {
   const Icon = tool.icon
@@ -214,6 +243,13 @@ export function LandingPage() {
   const { locale } = useLocale()
   const isZh = locale === "zh-CN"
 
+  const toolGroups = categories.map(cat => ({
+    key: cat.key,
+    label: categoryLabel(cat.key, isZh),
+    icon: cat.icon,
+    items: tools.filter(t => t.category === cat.key),
+  }))
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero */}
@@ -256,14 +292,39 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* Tool grid */}
+      {/* Tool grid by category */}
       <section className="flex-1 py-10 px-4">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {tools.map((tool) => (
-              <ToolCard key={tool.id} tool={tool} isZh={isZh} />
-            ))}
-          </div>
+        <div className="max-w-5xl mx-auto space-y-12">
+          {toolGroups.map((group) => {
+            const CatIcon = group.icon
+            return (
+              <div key={group.key}>
+                {/* Category heading */}
+                <div className="flex items-center gap-2 mb-5">
+                  <div className={`flex items-center justify-center w-8 h-8 rounded-lg ${
+                    group.key === "ai"
+                      ? "bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400"
+                      : group.key === "dashboard"
+                      ? "bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400"
+                      : "bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400"
+                  }`}>
+                    <CatIcon className="h-4 w-4" />
+                  </div>
+                  <h2 className="text-lg font-bold">{group.label}</h2>
+                  <span className="text-xs text-muted-foreground ml-auto">
+                    {group.items.length} {isZh ? "个工具" : "tools"}
+                  </span>
+                </div>
+
+                {/* Tool cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {group.items.map((tool) => (
+                    <ToolCard key={tool.id} tool={tool} isZh={isZh} />
+                  ))}
+                </div>
+              </div>
+            )
+          })}
         </div>
       </section>
     </div>
