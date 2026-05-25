@@ -60,6 +60,12 @@ function getFaqSchema(toolId: string, meta: ToolMeta): object {
       { q: "风险因素清单怎么用？", a: "输入公司的年报或公告文本，AI会自动提取风险因素并按行业、竞争、财务、宏观等维度分类排序。这让你快速看到'地雷'在哪，优先评估最严重的风险。" },
       { q: "How does the Risk Factor analyzer work?", a: "Paste your company's annual report or filing text, and the AI extracts, categorizes, and ranks risk factors by severity — industry, competitive, financial, and macro risks." },
     ],
+    "inflation-calculator": [
+      { q: "通胀计算器怎么用？", a: "支持两种模式：正向计算——今天100元在3%通胀率下10年后值多少钱；反向计算——1965年的1000美元相当于今天多少钱。内置了1913年到现在的美国CPI数据。" },
+      { q: "How does the Inflation Calculator work?", a: "Two modes: Forward — calculate what $100 today will be worth in 10 years at 3% inflation; Backward — see what $1,000 in 1965 is worth today. Built-in US CPI data from 1913." },
+      { q: "现在通胀率是多少？", a: "2025年美国CPI约为322，年均通胀率约3%。但不同年份差异很大——1980年高达14%，2009年甚至为负。工具内的CPI历史曲线可以清楚看到这些波动。" },
+      { q: "What's the current inflation rate?", a: "US CPI stands at approximately 322 in 2025, with an average annual rate around 3%. Historical rates vary dramatically — 14% in 1980 to nearly 0% in 2009. The CPI chart shows these fluctuations." },
+    ],
     "compound-interest": [
       { q: "复利计算器能算什么？", a: "输入本金、每月定投金额、年化收益率和年限，工具自动计算最终总资产、通胀调整后的真实购买力、逐年明细和增长曲线。还支持对比早/晚开始投资的差异。" },
       { q: "What does the Compound Interest calculator do?", a: "Input your initial principal, monthly contribution, expected annual return, and time horizon. It calculates final balance, inflation-adjusted value, year-by-year breakdown, and comparison scenarios." },

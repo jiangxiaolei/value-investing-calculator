@@ -93,6 +93,16 @@ const tools: ToolMeta[] = [
     category: "quant",
   },
   {
+    id: "inflation-calculator",
+    zh: "通胀计算器",
+    en: "Inflation Calculator",
+    zhDesc: "通胀对购买力的影响——正向/反向计算，内置CPI历史数据",
+    enDesc: "Inflation impact on purchasing power — forward/backward modes, built-in CPI history since 1913",
+    zhMetaDesc: "计算通胀对购买力的真实影响。正向预测未来购买力，反向查询历史购买力。内置1913年至今美国CPI数据。免费在线通胀计算器。",
+    enMetaDesc: "Calculate inflation's impact on purchasing power. Forward projections & historical lookups. Built-in US CPI data from 1913 to present. Free Inflation calculator.",
+    category: "calc",
+  },
+  {
     id: "compound-interest",
     zh: "复利计算器",
     en: "Compound Interest",
