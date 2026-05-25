@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { siteMetadata } from "@/lib/metadata"
 import { AppProviders } from "@/components/providers/app-providers"
 import { StructuredData } from "./structured-data"
+import DonateButton from "@/components/DonateButton"
 import "./globals.css"
 
 export const metadata: Metadata = siteMetadata
@@ -21,7 +22,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <StructuredData />
       </head>
       <body>
-        <AppProviders>{children}</AppProviders>
+        <AppProviders>
+          {children}
+          <DonateButton />
+        </AppProviders>
       </body>
     </html>
   )
