@@ -93,6 +93,16 @@ const tools: ToolMeta[] = [
     category: "quant",
   },
   {
+    id: "portfolio-rebalancer",
+    zh: "组合再平衡工具",
+    en: "Portfolio Rebalancer",
+    zhDesc: "分析持仓偏离度，自动生成买卖指令",
+    enDesc: "Analyze allocation deviations, auto-generate trade instructions",
+    zhMetaDesc: "输入当前持仓市值和目标配比，自动计算偏离度并生成明确的再平衡买卖指令。支持多资产类别。免费在线投资组合再平衡工具。",
+    enMetaDesc: "Enter current holdings and target allocations — calculates deviations and generates clear rebalance trade instructions. Free Portfolio Rebalancer tool.",
+    category: "calc",
+  },
+  {
     id: "inflation-calculator",
     zh: "通胀计算器",
     en: "Inflation Calculator",

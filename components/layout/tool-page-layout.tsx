@@ -60,6 +60,12 @@ function getFaqSchema(toolId: string, meta: ToolMeta): object {
       { q: "风险因素清单怎么用？", a: "输入公司的年报或公告文本，AI会自动提取风险因素并按行业、竞争、财务、宏观等维度分类排序。这让你快速看到'地雷'在哪，优先评估最严重的风险。" },
       { q: "How does the Risk Factor analyzer work?", a: "Paste your company's annual report or filing text, and the AI extracts, categorizes, and ranks risk factors by severity — industry, competitive, financial, and macro risks." },
     ],
+    "portfolio-rebalancer": [
+      { q: "投资组合再平衡工具怎么用？", a: "第一步：添加你的资产类别（股票、债券、现金、加密货币等），为每个类别设置目标配比百分比。第二步：输入每个类别的当前市值。工具自动计算偏离度，生成明确的买卖指令。" },
+      { q: "How does the Portfolio Rebalancer work?", a: "Step 1: Add your asset classes (stocks, bonds, cash, crypto, etc.) and set target allocation percentages. Step 2: Enter current market values. The tool calculates deviations and generates clear trade instructions." },
+      { q: "再平衡为什么要做？", a: "市场波动会让你的投资组合偏离原定配比。比如股票涨得多就会超配，风险变高。定期再平衡能让你维持纪律性——低买高卖，控制风险。" },
+      { q: "Why rebalance a portfolio?", a: "Market movements cause your allocation to drift from targets. Stocks rallying means you're taking more risk than planned. Regular rebalancing enforces discipline — buy low, sell high, control risk." },
+    ],
     "inflation-calculator": [
       { q: "通胀计算器怎么用？", a: "支持两种模式：正向计算——今天100元在3%通胀率下10年后值多少钱；反向计算——1965年的1000美元相当于今天多少钱。内置了1913年到现在的美国CPI数据。" },
       { q: "How does the Inflation Calculator work?", a: "Two modes: Forward — calculate what $100 today will be worth in 10 years at 3% inflation; Backward — see what $1,000 in 1965 is worth today. Built-in US CPI data from 1913." },
