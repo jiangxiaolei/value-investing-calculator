@@ -36,7 +36,7 @@ export function Header() {
         <Link href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity shrink-0">
           <img src="/logo.svg" alt="归估值" width={28} height={28} className="flex-shrink-0" />
           <div className="flex items-center gap-1">
-            <span className="font-bold text-sm text-green-700 dark:text-green-400">归</span>
+            <span className="font-bold text-sm text-amber-700 dark:text-amber-400">归</span>
             <span className="font-semibold text-sm">{isZh ? "估值" : "Guigu"}</span>
           </div>
         </Link>
@@ -70,7 +70,7 @@ export function Header() {
                           <Link
                             key={tool.id}
                             href={href}
-                            className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-accent hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                            className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-accent hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
                             onClick={() => setToolsOpen(false)}
                           >
                             <span className="text-muted-foreground">{tool.id === "dashboard" ? "" : ""}</span>
@@ -139,7 +139,7 @@ export function Header() {
                       <Link
                         key={tool.id}
                         href={href}
-                        className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-accent hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                        className="flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-accent hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
                         onClick={() => setMobileOpen(false)}
                       >
                         <span>{isZh ? tool.zh : tool.en}</span>

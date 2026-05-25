@@ -188,7 +188,7 @@ function ToolCard({ tool, isZh }: { tool: Tool; isZh: boolean }) {
         group relative flex flex-col gap-4 rounded-2xl border p-6 text-left
         transition-all duration-200
         ${tool.ready
-          ? "bg-background hover:border-green-300 hover:shadow-lg hover:shadow-green-100/50 dark:hover:shadow-green-950/30 dark:hover:border-green-700"
+          ? "bg-background hover:border-amber-300 hover:shadow-lg hover:shadow-amber-100/50 dark:hover:shadow-amber-950/30 dark:hover:border-amber-700"
           : "bg-muted/30 opacity-60 cursor-not-allowed"
         }
       `}
@@ -196,12 +196,12 @@ function ToolCard({ tool, isZh }: { tool: Tool; isZh: boolean }) {
     >
       {/* Icon + badges */}
       <div className="flex items-center justify-between">
-        <div className={`flex items-center justify-center w-12 h-12 rounded-xl ${tool.ready ? "bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform" : "bg-muted text-muted-foreground"}`}>
+        <div className={`flex items-center justify-center w-12 h-12 rounded-xl ${tool.ready ? "bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 group-hover:scale-110 transition-transform" : "bg-muted text-muted-foreground"}`}>
           <Icon className="h-6 w-6" />
         </div>
         <div className="flex items-center gap-2">
           {tool.new && (
-            <span className="text-xs bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 font-medium px-2 py-0.5 rounded-full">
+            <span className="text-xs bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 font-medium px-2 py-0.5 rounded-full">
               {isZh ? "新" : "New"}
             </span>
           )}
@@ -230,7 +230,7 @@ function ToolCard({ tool, isZh }: { tool: Tool; isZh: boolean }) {
 
       {/* Footer arrow */}
       {tool.ready && (
-        <div className="flex items-center gap-1 text-xs text-green-600 dark:text-green-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity">
           <span>{isZh ? "立即使用" : "Use now"}</span>
           <ArrowRight className="h-3 w-3" />
         </div>
@@ -253,18 +253,18 @@ export function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero */}
-      <section className="bg-gradient-to-b from-green-50/60 to-background dark:from-green-950/20 py-10 px-4 border-b">
+      <section className="bg-gradient-to-b from-amber-50/60 to-background dark:from-amber-950/20 py-10 px-4 border-b">
         <div className="max-w-5xl mx-auto text-center space-y-4">
-          <div className="inline-flex items-center gap-1.5 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 text-xs font-medium px-3 py-1.5 rounded-full">
+          <div className="inline-flex items-center gap-1.5 bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 text-xs font-medium px-3 py-1.5 rounded-full">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
             </span>
             {isZh ? "免费工具 · 无需注册" : "Free Tools · No Sign-up"}
           </div>
 
           <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-            <span className="text-green-700 dark:text-green-400">归估值</span>
+            <span className="text-amber-700 dark:text-amber-400">归估值</span>
             <span className="text-foreground"> — </span>
             <span className="text-foreground">{isZh ? "价值投资工具箱" : "Value Investing Toolkit"}</span>
           </h1>
@@ -277,15 +277,15 @@ export function LandingPage() {
 
           <div className="flex flex-wrap justify-center gap-6 pt-2">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Shield className="h-4 w-4 text-green-600" />
+              <Shield className="h-4 w-4 text-amber-600" />
               {isZh ? "安全边际" : "Margin of Safety"}
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <TrendingUp className="h-4 w-4 text-green-600" />
+              <TrendingUp className="h-4 w-4 text-amber-600" />
               {isZh ? "增长复利" : "Compounding Growth"}
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Zap className="h-4 w-4 text-green-600" />
+              <Zap className="h-4 w-4 text-amber-600" />
               {isZh ? "秒出结论" : "Instant Insight"}
             </div>
           </div>
@@ -306,7 +306,7 @@ export function LandingPage() {
                       ? "bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400"
                       : group.key === "dashboard"
                       ? "bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400"
-                      : "bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400"
+                      : "bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400"
                   }`}>
                     <CatIcon className="h-4 w-4" />
                   </div>

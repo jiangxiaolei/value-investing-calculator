@@ -10,7 +10,7 @@ const categoryIcons: Record<ToolCategory, ReactNode> = {
   quant: <Calculator className="h-3 w-3" />,
   ai: <Sparkles className="h-3 w-3 text-purple-500" />,
   dashboard: <Shield className="h-3 w-3 text-blue-500" />,
-  calc: <TrendingUp className="h-3 w-3 text-green-500" />,
+  calc: <TrendingUp className="h-3 w-3 text-amber-500" />,
 }
 
 function getFaqSchema(toolId: string, meta: ToolMeta): object {
@@ -128,7 +128,7 @@ export function ToolPageLayout({
       )}
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
-        <Link href="/" className="hover:text-green-600 dark:hover:text-green-400 transition-colors">
+        <Link href="/" className="hover:text-amber-600 dark:hover:text-amber-400 transition-colors">
           {isZh ? "首页" : "Home"}
         </Link>
         <ChevronRight className="h-3.5 w-3.5" />
@@ -145,7 +145,7 @@ export function ToolPageLayout({
       {/* Back link (mobile) */}
       <Link
         href="/"
-        className="inline-flex items-center gap-1.5 text-sm text-green-600 dark:text-green-400 hover:underline sm:hidden"
+        className="inline-flex items-center gap-1.5 text-sm text-amber-600 dark:text-amber-400 hover:underline sm:hidden"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
         {isZh ? "返回全部工具" : "Back to all tools"}
@@ -167,9 +167,9 @@ export function ToolPageLayout({
                 <Link
                   key={rt.id}
                   href={href}
-                  className="group rounded-xl border p-4 hover:border-green-300 hover:shadow-md transition-all duration-200 bg-background"
+                  className="group rounded-xl border p-4 hover:border-amber-300 hover:shadow-md transition-all duration-200 bg-background"
                 >
-                  <h3 className="text-sm font-semibold text-foreground group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                  <h3 className="text-sm font-semibold text-foreground group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                     {isZh ? rt.zh : rt.en}
                   </h3>
                   <p className="text-xs text-muted-foreground mt-1 leading-relaxed line-clamp-2">
