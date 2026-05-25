@@ -1,4 +1,4 @@
-export type ToolCategory = "quant" | "ai" | "dashboard"
+export type ToolCategory = "quant" | "ai" | "dashboard" | "calc"
 
 export interface ToolMeta {
   id: string
@@ -93,6 +93,16 @@ const tools: ToolMeta[] = [
     category: "quant",
   },
   {
+    id: "compound-interest",
+    zh: "复利计算器",
+    en: "Compound Interest",
+    zhDesc: "定投复利计算——收益曲线、通胀调整、逐年明细",
+    enDesc: "Compound interest with monthly contributions — growth chart, inflation adjustment, yearly breakdown",
+    zhMetaDesc: "计算复利定投增长——每月定投、年化收益率、通胀调整，逐年明细表+对比分析曲线。免费在线复利计算器，理解雪球效应的最佳工具。",
+    enMetaDesc: "Calculate compound interest growth with monthly contributions, inflation adjustment, and yearly breakdown. Free Compound Interest calculator — see the snowball effect.",
+    category: "calc",
+  },
+  {
     id: "dashboard",
     zh: "个股仪表盘",
     en: "Stock Dashboard",
@@ -156,6 +166,7 @@ export function categoryLabel(category: ToolCategory, isZh: boolean): string {
     quant: { zh: "量化计算工具", en: "Quantitative Tools" },
     ai: { zh: "AI 分析工具", en: "AI Analysis Tools" },
     dashboard: { zh: "综合仪表盘", en: "Dashboard" },
+    calc: { zh: "投资计算器", en: "Investment Calculators" },
   }
   return isZh ? labels[category].zh : labels[category].en
 }

@@ -2,7 +2,7 @@
 
 import { type ReactNode } from "react"
 import Link from "next/link"
-import { ChevronRight, ArrowLeft, Calculator, Shield, Sparkles } from "lucide-react"
+import { ChevronRight, ArrowLeft, Calculator, Shield, Sparkles, TrendingUp } from "lucide-react"
 import { useLocale } from "@/lib/i18n/i18n-context"
 import { getToolMeta, getRelatedTools, categoryLabel, type ToolCategory } from "@/lib/tools-metadata"
 
@@ -10,6 +10,7 @@ const categoryIcons: Record<ToolCategory, ReactNode> = {
   quant: <Calculator className="h-3 w-3" />,
   ai: <Sparkles className="h-3 w-3 text-purple-500" />,
   dashboard: <Shield className="h-3 w-3 text-blue-500" />,
+  calc: <TrendingUp className="h-3 w-3 text-green-500" />,
 }
 
 function getFaqSchema(toolId: string, meta: ToolMeta): object {
@@ -58,6 +59,12 @@ function getFaqSchema(toolId: string, meta: ToolMeta): object {
     "risk-factors": [
       { q: "风险因素清单怎么用？", a: "输入公司的年报或公告文本，AI会自动提取风险因素并按行业、竞争、财务、宏观等维度分类排序。这让你快速看到'地雷'在哪，优先评估最严重的风险。" },
       { q: "How does the Risk Factor analyzer work?", a: "Paste your company's annual report or filing text, and the AI extracts, categorizes, and ranks risk factors by severity — industry, competitive, financial, and macro risks." },
+    ],
+    "compound-interest": [
+      { q: "复利计算器能算什么？", a: "输入本金、每月定投金额、年化收益率和年限，工具自动计算最终总资产、通胀调整后的真实购买力、逐年明细和增长曲线。还支持对比早/晚开始投资的差异。" },
+      { q: "What does the Compound Interest calculator do?", a: "Input your initial principal, monthly contribution, expected annual return, and time horizon. It calculates final balance, inflation-adjusted value, year-by-year breakdown, and comparison scenarios." },
+      { q: "为什么复利是'第八大奇迹'？", a: "因为复利是指数增长——不仅本金生息，利息也生息。时间越长效果越明显。工具对比功能可以直观看到：早投资5年 vs 晚投资5年，最终差距可能高达数倍。" },
+      { q: "Why is compound interest called the 'eighth wonder'?", a: "Because it's exponential growth — your earnings also earn returns. The longer the time horizon, the more dramatic the effect. Our comparison feature shows the real cost of waiting." },
     ],
     "dashboard": [
       { q: "个股仪表盘支持哪些市场？", a: "支持A股、港股和美股。输入股票代码即可查看关键估值指标——市盈率、市净率、股息率等。数据来源为公开市场数据，仅供参考。" },
