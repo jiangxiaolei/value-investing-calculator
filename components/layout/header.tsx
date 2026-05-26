@@ -103,6 +103,13 @@ export function Header() {
               </a>
             )
           })}
+          {/* Blog link */}
+          <Link
+            href="/blog"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-md transition-colors"
+          >
+            📖 {isZh ? "博客" : "Blog"}
+          </Link>
         </nav>
 
         {/* Right side */}
@@ -152,6 +159,15 @@ export function Header() {
                 </div>
               )
             })}
+            {/* Blog link in mobile */}
+            <Link
+              href="/blog"
+              className="flex items-center gap-2 px-3 py-2.5 mt-2 text-sm font-medium rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors"
+              onClick={() => setMobileOpen(false)}
+            >
+              📖 {isZh ? "价值投资博客" : "Value Investing Blog"}
+              <span className="ml-auto text-xs opacity-60">→</span>
+            </Link>
           </div>
         </div>
       )}
