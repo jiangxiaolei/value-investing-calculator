@@ -4,8 +4,8 @@ import { ToolPageLayout } from "@/components/layout/tool-page-layout"
 import { MoatAnalyzer } from "@/components/calculator/moat-analyzer"
 
 export const metadata = {
-  title: "护城河分析 — AI评估企业竞争优势",
-  description: "AI-powered economic moat analysis. Free Moat Analyzer that identifies competitive advantages and assesses moat strength.",
+  title: "护城河评分 — 基于真实财务数据的竞争壁垒评估",
+  description: "Enter a stock code to automatically assess competitive moat through ROE, gross margin, debt ratio, and market cap analysis. Free moat rating tool.",
 }
 
 export default function MoatAnalyzerPage() {

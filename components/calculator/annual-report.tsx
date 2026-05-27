@@ -19,6 +19,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useLocale } from "@/lib/i18n/i18n-context"
@@ -93,9 +94,46 @@ export function AnnualReportSummarizer() {
   const [isLoading, setIsLoading] = useState(false)
   const [result, setResult] = useState<AnnualReportResult | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [stockCode, setStockCode] = useState("")
+  const [exchange, setExchange] = useState("sz")
+  const [isAutoLoading, setIsAutoLoading] = useState(false)
   const [activeTab, setActiveTab] = useState("summary")
   const [copiedField, setCopiedField] = useState<string | null>(null)
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["financial", "operations", "risks"]))
+
+  const autoFillStock = async () => {
+    if (!stockCode.trim()) return
+    setIsAutoLoading(true)
+    try {
+      const workerUrl = process.env.NEXT_PUBLIC_AI_API_URL || ""
+      const res = await fetch(`${workerUrl}/?code=${encodeURIComponent(stockCode.trim())}&exchange=${exchange}`)
+      if (!res.ok) throw new Error(isZh ? "未找到該股票" : "Stock not found")
+      const json = await res.json()
+      const d = json.data
+      if (!d) throw new Error(isZh ? "未找到該股票" : "Stock not found")
+      setCompanyName(d.name || stockCode.toUpperCase())
+      setReportYear(new Date().getFullYear().toString())
+      // Build a pre-filled financial summary from live data
+      const lines = [`${d.name} 財務概覽`]
+      if (d.price) lines.push(`當前股價: ${d.price}`)
+      if (d.pe) lines.push(`市盈率(動): ${d.pe}`)
+      if (d.roe) lines.push(`ROE: ${(d.roe*100).toFixed(1)}%`)
+      if (d.grossMargin) lines.push(`毛利率: ${(d.grossMargin*100).toFixed(1)}%`)
+      if (d.netMargin) lines.push(`淨利率: ${(d.netMargin*100).toFixed(1)}%`)
+      if (d.debtRatio) lines.push(`資產負債率: ${(d.debtRatio*100).toFixed(1)}%`)
+      if (d.revenue) lines.push(`營業收入: ${d.revenue}萬元`)
+      if (d.netProfit) lines.push(`淨利潤: ${d.netProfit}萬元`)
+      if (d.marketCap) lines.push(`總市值: ${d.marketCap >= 10000 ? (d.marketCap/10000).toFixed(1)+'萬億' : d.marketCap.toFixed(1)+'億'}元`)
+      lines.push("")
+      lines.push("--- 請在此處補充年報或財報詳細內容，用於AI深度分析 ---")
+      setReportText(lines.join("\n"))
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err)
+      setError(msg)
+    } finally {
+      setIsAutoLoading(false)
+    }
+  }
 
   const handleSummarize = async () => {
     if (reportText.trim().length < 100) {
@@ -241,6 +279,58 @@ export function AnnualReportSummarizer() {
           }
         </p>
       </div>
+
+      {/* Stock Code Quick Fill */}
+      <Card className="border-green-200 dark:border-green-900">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Building2 className="h-5 w-5 text-green-600" />
+            {isZh ? "自動填充" : "Quick Fill"}
+          </CardTitle>
+          <CardDescription>
+            {isZh
+              ? "輸入股票代碼，自動填入公司名稱和最新財務數據作為分析基礎"
+              : "Enter a stock code to auto-fill company name and financial data"}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-end gap-3">
+            <div className="space-y-2 flex-1">
+              <div className="flex gap-2">
+                <Input
+                  value={stockCode}
+                  onChange={(e) => setStockCode(e.target.value)}
+                  placeholder={isZh ? "例：600519 或 AAPL" : "e.g. 600519 or AAPL"}
+                  className="flex-1"
+                  onKeyDown={(e) => e.key === "Enter" && autoFillStock()}
+                />
+                <Select value={exchange} onValueChange={setExchange}>
+                  <SelectTrigger className="w-[110px]">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="sz">SZ (深交所)</SelectItem>
+                    <SelectItem value="sh">SH (上交所)</SelectItem>
+                    <SelectItem value="hk">HK (港股)</SelectItem>
+                    <SelectItem value="us">US (美股)</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Button
+                  onClick={autoFillStock}
+                  disabled={isAutoLoading || !stockCode.trim()}
+                  variant="outline"
+                >
+                  {isAutoLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <>{isZh ? "填充數據" : "Fill Data"}</>
+                  )}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Input Card */}
       <Card className="border-green-200 dark:border-green-900">
