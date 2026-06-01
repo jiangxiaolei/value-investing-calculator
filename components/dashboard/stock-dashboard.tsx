@@ -294,13 +294,7 @@ export function StockDashboard() {
       return
     }
 
-    // Try Worker proxy first (for richer A/H-share data)
-    const workerUrl = (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_AI_API_URL) 
-      ? process.env.NEXT_PUBLIC_AI_API_URL 
-      : (typeof window !== 'undefined' 
-        ? window.location.origin 
-        : 'https://value.chengyi.chat')
-    
+    // Try Pages Functions proxy first (for richer A/H-share data)
     const regionMap: Record<string, string> = {
       "A-股": "",
       "HK股": "hk",
@@ -309,7 +303,7 @@ export function StockDashboard() {
     
     try {
       const exchange = regionMap[regionKey] || ""
-      const res = await fetch(`${workerUrl}/?code=${encodeURIComponent(code.trim())}&exchange=${exchange}`, {
+      const res = await fetch(`/api/stock?code=${encodeURIComponent(code.trim())}&exchange=${exchange}`, {
         headers: { "Accept": "application/json" },
         signal: AbortSignal.timeout(5000),
       })

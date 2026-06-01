@@ -106,8 +106,7 @@ export function RiskScorecard() {
   const [fetchedData, setFetchedData] = useState<StockData | null>(null)
 
   const fetchStockData = async (code: string, exch: string): Promise<StockData> => {
-    const workerUrl = process.env.NEXT_PUBLIC_AI_API_URL || ""
-    const res = await fetch(`${workerUrl}/?code=${encodeURIComponent(code.trim())}&exchange=${exch}`)
+    const res = await fetch(`/api/stock?code=${encodeURIComponent(code.trim())}&exchange=${exch}`)
     if (!res.ok) {
       const errData = await res.json().catch(() => ({}))
       throw new Error(errData.error || `HTTP ${res.status}`)

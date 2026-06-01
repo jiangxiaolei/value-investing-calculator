@@ -105,8 +105,7 @@ export function AnnualReportSummarizer() {
     if (!stockCode.trim()) return
     setIsAutoLoading(true)
     try {
-      const workerUrl = process.env.NEXT_PUBLIC_AI_API_URL || ""
-      const res = await fetch(`${workerUrl}/?code=${encodeURIComponent(stockCode.trim())}&exchange=${exchange}`)
+      const res = await fetch(`/api/stock?code=${encodeURIComponent(stockCode.trim())}&exchange=${exchange}`)
       if (!res.ok) throw new Error(isZh ? "未找到該股票" : "Stock not found")
       const json = await res.json()
       const d = json.data
@@ -162,7 +161,7 @@ export function AnnualReportSummarizer() {
     setResult(null)
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_AI_API_URL}/api/ai`, {
+      const response = await fetch(`/api/ai`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -182,8 +181,8 @@ export function AnnualReportSummarizer() {
         const errorData = data as ApiError
         if (errorData.isConfigurationError) {
           setError(isZh
-            ? "API未配置。请在 Cloudflare Worker 设置中配置 OPENAI_API_KEY，并在 Pages 项目中设置 NEXT_PUBLIC_AI_API_URL。"
-            : "API not configured. Set OPENAI_API_KEY in Cloudflare Worker settings, and NEXT_PUBLIC_AI_API_URL in Pages environment variables."
+            ? "API未配置。请在 Cloudflare Pages 环境变量中配置 DEEPSEEK_API_KEY。"
+            : "API not configured. Set DEEPSEEK_API_KEY in Cloudflare Pages environment variables."
           )
         } else {
           setError(errorData.error || (isZh ? "摘要生成失败" : "Summary generation failed"))

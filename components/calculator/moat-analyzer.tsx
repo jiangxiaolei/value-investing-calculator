@@ -68,8 +68,7 @@ export function MoatAnalyzer() {
   const [isLoading, setIsLoading] = useState(false); const [result, setResult] = useState<MoatResult | null>(null); const [error, setError] = useState<string | null>(null)
 
   const fetchStock = async (code: string, exch: string): Promise<StockData> => {
-    const w = process.env.NEXT_PUBLIC_AI_API_URL || ""
-    const r = await fetch(`${w}/?code=${encodeURIComponent(code.trim())}&exchange=${exch}`)
+    const r = await fetch(`/api/stock?code=${encodeURIComponent(code.trim())}&exchange=${exch}`)
     if (!r.ok) throw new Error(isZh ? "未找到該股票" : "Stock not found")
     const j = await r.json(); const d = j.data
     if (!d) throw new Error(isZh ? "未找到該股票" : "Stock not found")
