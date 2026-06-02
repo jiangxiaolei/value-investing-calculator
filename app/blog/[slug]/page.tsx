@@ -6,6 +6,10 @@ export function generateStaticParams() {
   return getAllPosts().map(p => ({ slug: p.slug }))
 }
 
+// Helper: convert markdown links [text](url) to HTML anchors
+const linkify = (text: string) =>
+  text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-amber-600 dark:text-amber-400 hover:underline font-medium">$1</a>')
+
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const post = getPostBySlug(slug)
@@ -17,13 +21,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     let html = ""
     for (const line of lines) {
       if (line.startsWith("## ")) {
-        html += `<h2 class="text-xl font-bold text-gray-900 dark:text-white mt-8 mb-4">${line.slice(3)}</h2>\n`
+        html += `<h2 class="text-xl font-bold text-gray-900 dark:text-white mt-8 mb-4">${linkify(line.slice(3))}</h2>\n`
       } else if (line.startsWith("### ")) {
-        html += `<h3 class="text-lg font-semibold text-gray-900 dark:text-white mt-6 mb-3">${line.slice(4)}</h3>\n`
+        html += `<h3 class="text-lg font-semibold text-gray-900 dark:text-white mt-6 mb-3">${linkify(line.slice(4))}</h3>\n`
       } else if (line.startsWith("---")) {
         html += `<hr class="my-8 border-gray-200 dark:border-gray-800" />\n`
       } else if (line.startsWith("> ")) {
-        html += `<blockquote class="border-l-4 border-amber-400 pl-4 py-2 my-4 text-gray-600 dark:text-gray-400 italic">${line.slice(2)}</blockquote>\n`
+        html += `<blockquote class="border-l-4 border-amber-400 pl-4 py-2 my-4 text-gray-600 dark:text-gray-400 italic">${linkify(line.slice(2))}</blockquote>\n`
       } else if (line.startsWith("| ")) {
         // Simple table handling
         if (line.includes("---")) continue
@@ -31,17 +35,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         const tag = line.includes("---") ? "" : 
           cells.length > 2 ? "td" : ""
         if (tag) {
-          html += `<tr>${cells.map(c => `<${tag} class="px-4 py-2 border border-gray-200 dark:border-gray-700 text-sm">${c.trim()}</${tag}>`).join("")}</tr>\n`
+          html += `<tr>${cells.map(c => `<${tag} class="px-4 py-2 border border-gray-200 dark:border-gray-700 text-sm">${linkify(c.trim())}</${tag}>`).join("")}</tr>\n`
         }
       } else if (line.startsWith("- **") || line.startsWith("* **")) {
         const boldEnd = line.indexOf("**", 4)
         const label = line.slice(4, boldEnd)
         const rest = line.slice(boldEnd + 2).replace("：", "")
-        html += `<li class="flex items-start gap-2 text-gray-700 dark:text-gray-300 mb-2"><span class="font-semibold text-gray-900 dark:text-white">${label}：</span>${rest}</li>\n`
+        html += `<li class="flex items-start gap-2 text-gray-700 dark:text-gray-300 mb-2"><span class="font-semibold text-gray-900 dark:text-white">${linkify(label)}：</span>${linkify(rest)}</li>\n`
       } else if (line.startsWith("- ") || line.startsWith("* ")) {
-        html += `<li class="text-gray-700 dark:text-gray-300 mb-1">${line.slice(2)}</li>\n`
+        html += `<li class="text-gray-700 dark:text-gray-300 mb-1">${linkify(line.slice(2))}</li>\n`
       } else if (line.match(/^\d+\. /)) {
-        html += `<li class="text-gray-700 dark:text-gray-300 mb-2 ml-4 list-decimal">${line.replace(/^\d+\. /, "")}</li>\n`
+        html += `<li class="text-gray-700 dark:text-gray-300 mb-2 ml-4 list-decimal">${linkify(line.replace(/^\d+\. /, ""))}</li>\n`
       } else if (line.trim() === "") {
         html += `<br />\n`
       } else if (line.startsWith("\\") && line.includes("\\text")) {
@@ -52,9 +56,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
       } else if (line.startsWith("\\\\\\)")) {
         continue // Skip LaTeX closing
       } else {
-        // Regular text - check for links
-        const linked = line.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-amber-600 dark:text-amber-400 hover:underline font-medium">$1</a>')
-        html += `<p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">${linked}</p>\n`
+        html += `<p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">${linkify(line)}</p>\n`
       }
     }
     return html
