@@ -1,99 +1,167 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.w3.org/2001/XMLSchema">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://value.chengyi.chat/</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://value.chengyi.chat/blog</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://value.chengyi.chat/dashboard</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
+  <!-- Tool Pages -->
   <url>
-    <loc>https://value.chengyi.chat/tools/graham-number</loc>
-    <lastmod>2026-05-25</lastmod>
+    <loc>https://value.chengyi.chat/tools/pe-percentile</loc>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://value.chengyi.chat/tools/pe-percentile</loc>
-    <lastmod>2026-05-25</lastmod>
+    <loc>https://value.chengyi.chat/tools/graham-number</loc>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://value.chengyi.chat/tools/margin-of-safety</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://value.chengyi.chat/tools/reverse-calculator</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://value.chengyi.chat/tools/fcf-quality</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://value.chengyi.chat/tools/tenx-ten-years</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://value.chengyi.chat/tools/peg-ratio</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://value.chengyi.chat/tools/szr-calculator</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://value.chengyi.chat/tools/moat-analyzer</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://value.chengyi.chat/tools/annual-report</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://value.chengyi.chat/tools/risk-factors</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://value.chengyi.chat/tools/compound-interest</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://value.chengyi.chat/tools/inflation-calculator</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://value.chengyi.chat/tools/portfolio-rebalancer</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-06-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <!-- Blog Posts -->
+  <url>
+    <loc>https://value.chengyi.chat/blog/berkshire-2026-shareholder-meeting</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://value.chengyi.chat/blog/margin-of-safety-guide</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://value.chengyi.chat/blog/graham-number-calculator-guide</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://value.chengyi.chat/blog/compound-interest-calculator-guide</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://value.chengyi.chat/blog/pe-percentile-analysis</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://value.chengyi.chat/blog/moat-analysis-guide</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://value.chengyi.chat/blog/inflation-impact-investing</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://value.chengyi.chat/blog/roe-roic-analysis</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://value.chengyi.chat/blog/portfolio-rebalancing-guide</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://value.chengyi.chat/blog/midyear-market-review-2026</loc>
+    <lastmod>2026-06-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

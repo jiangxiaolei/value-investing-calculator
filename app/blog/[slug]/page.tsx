@@ -1,6 +1,12 @@
 import Link from "next/link"
 import { getPostBySlug, getAllPosts } from "@/lib/blog-posts"
 import { notFound } from "next/navigation"
+import {
+  extractFaqsFromContent,
+  getBreadcrumbSchema,
+  getFaqSchema,
+  getArticleSchema,
+} from "@/lib/structured-data"
 
 export function generateStaticParams() {
   return getAllPosts().map(p => ({ slug: p.slug }))
@@ -14,6 +20,16 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const { slug } = await params
   const post = getPostBySlug(slug)
   if (!post) notFound()
+
+  // Structured data for AI engines
+  const faqs = extractFaqsFromContent(post.content, 5)
+  const breadcrumb = getBreadcrumbSchema([
+    { name: "首页", url: "https://value.chengyi.chat" },
+    { name: "博客", url: "https://value.chengyi.chat/blog" },
+    { name: post.title, url: `https://value.chengyi.chat/blog/${slug}` },
+  ])
+  const articleSchema = getArticleSchema(post.title, post.excerpt, post.date, slug, post.tags)
+  const faqSchema = getFaqSchema(faqs)
 
   // Convert markdown-style content to HTML with simple rendering
   const renderContent = (text: string) => {
@@ -64,6 +80,23 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-amber-50/30 dark:from-gray-950 dark:via-gray-900 dark:to-amber-950/10">
+      {/* JSON-LD: BreadcrumbList */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      {/* JSON-LD: Article */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      {/* JSON-LD: FAQPage */}
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <header className="border-b border-gray-200 dark:border-gray-800">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link href="/" className="text-xl font-bold bg-gradient-to-r from-amber-600 to-yellow-500 bg-clip-text text-transparent">

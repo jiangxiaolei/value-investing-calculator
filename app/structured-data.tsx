@@ -1,10 +1,16 @@
-import { getStructuredData } from "@/lib/structured-data"
+import { getWebsiteSchema, getOrganizationSchema } from "@/lib/structured-data"
 
 export function StructuredData() {
+  const schemas = [getWebsiteSchema(), getOrganizationSchema()]
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(getStructuredData()) }}
-    />
+    <>
+      {schemas.map((s, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(s) }}
+        />
+      ))}
+    </>
   )
 }

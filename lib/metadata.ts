@@ -45,6 +45,9 @@ export const siteMetadata: Metadata = {
     title: "归估值 — Value Investing Tools",
     description: "Calculate intrinsic value and ideal buy prices for value investing.",
   },
+  verification: {
+    google: "a7kPnOvTJMtmIzG8I-Hcg1MsS6WOWm2Z-Kv_0wTIS2g",
+  },
   robots: {
     index: true,
     follow: true,
