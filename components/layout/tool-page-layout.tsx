@@ -60,6 +60,22 @@ function getFaqSchema(toolId: string, meta: ToolMeta): object {
       { q: "风险因素清单怎么用？", a: "输入公司的年报或公告文本，AI会自动提取风险因素并按行业、竞争、财务、宏观等维度分类排序。这让你快速看到'地雷'在哪，优先评估最严重的风险。" },
       { q: "How does the Risk Factor analyzer work?", a: "Paste your company's annual report or filing text, and the AI extracts, categorizes, and ranks risk factors by severity — industry, competitive, financial, and macro risks." },
     ],
+    "dividend-yield": [
+      { q: "股息率怎么算？", a: "股息率 = 每股年分红 ÷ 当前股价 × 100%。例如每股分红1元、股价20元，股息率就是5%。股息率是衡量股票分红回报的核心指标。" },
+      { q: "How is dividend yield calculated?", a: "Dividend Yield = Annual DPS ÷ Current Price × 100%. For example, $1 DPS at $20 price = 5% yield." },
+      { q: "股息率多少算高？", a: "A股通常5%以上算高股息，常见于银行、电力等成熟行业。3-5%为中等水平，低于3%通常属于成长型公司。但高股息不一定好，需要确认分红是否可持续。" },
+      { q: "What is a good dividend yield?", a: "5%+ is considered high, common in banks and utilities. 3-5% is moderate. Below 3% is typical for growth companies. Verify sustainability first." },
+    ],
+    "roe-roic": [
+      { q: "ROE和ROIC有什么区别？", a: "ROE反映股东资金的使用效率，受杠杆影响（负债越多ROE越高）。ROIC反映全部投入资本的经营效率，排除了杠杆影响，更能真实反映公司的盈利能力。巴菲特更看重ROIC。" },
+      { q: "What's the difference between ROE and ROIC?", a: "ROE measures shareholder capital efficiency but is amplified by leverage. ROIC measures operating efficiency on all invested capital, excluding leverage — a truer measure of profitability." },
+      { q: "ROE多少算优秀？", a: "连续5年ROE > 20%属于优秀水平，说明企业有宽阔护城河。15-20%为良好，10-15%为一般。<10%说明盈利能力偏弱。" },
+      { q: "What is a good ROE?", a: "Sustained ROE > 20% for 5+ years indicates a wide moat. 15-20% is good, 10-15% average, <10% is below average." },
+    ],
+    "cost-basis": [
+      { q: "持仓成本怎么算？", a: "加权平均成本 = 所有买入的总成本（含手续费）÷ 总持股数。每次补仓或做T后，用加权平均法重新计算真实持仓成本。" },
+      { q: "How to calculate cost basis?", a: "Weighted average cost = Total cost of all purchases (including fees) ÷ Total shares held. Recalculate after each buy to track true cost." },
+    ],
     "portfolio-rebalancer": [
       { q: "投资组合再平衡工具怎么用？", a: "第一步：添加你的资产类别（股票、债券、现金、加密货币等），为每个类别设置目标配比百分比。第二步：输入每个类别的当前市值。工具自动计算偏离度，生成明确的买卖指令。" },
       { q: "How does the Portfolio Rebalancer work?", a: "Step 1: Add your asset classes (stocks, bonds, cash, crypto, etc.) and set target allocation percentages. Step 2: Enter current market values. The tool calculates deviations and generates clear trade instructions." },
