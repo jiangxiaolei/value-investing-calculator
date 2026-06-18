@@ -1,6 +1,8 @@
 import { MetadataRoute } from "next"
 import { getAllPosts } from "@/lib/blog-posts"
 
+export const dynamic = "force-static"
+
 const baseUrl = "https://value.chengyi.chat"
 
 const toolSlugs = [
