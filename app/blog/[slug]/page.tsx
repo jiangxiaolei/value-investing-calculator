@@ -1,6 +1,20 @@
 import Link from "next/link"
 import { getPostBySlug, getAllPosts } from "@/lib/blog-posts"
 import { notFound } from "next/navigation"
+import type { Metadata } from "next"
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const post = getPostBySlug(slug)
+  if (!post) return {}
+  return {
+    title: post.title,
+    description: post.excerpt,
+    alternates: {
+      canonical: `https://value.chengyi.chat/blog/${slug}`,
+    },
+  }
+}
 import {
   extractFaqsFromContent,
   getBreadcrumbSchema,
